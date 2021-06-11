@@ -1,0 +1,14 @@
+.Forecast {
+  margin-top: 5px;
+  text-align: center;
+  font-weight: 600;
+}
+
+h3.forecast-temp {
+  font-size: 22px;
+  padding: 3px 5px;
+}
+
+img.forecast-icon {
+  width: 65px;
+}
