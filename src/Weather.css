@@ -1,13 +1,24 @@
 .Search {
-  font-family: sans-serif;
-  text-align: right;
-}
-li {
-  font-size: 16px;
-  list-style-type: none;
-  text-align: left;
+  font-size: 15px;
+  font-weight: 400;
 }
 
-img {
-  vertical-align: middle;
+input.search-input,
+button.location-button,
+input.search-button {
+  box-shadow: 2px 2px 3px rgb(71, 68, 71, 0.5);
+  margin-bottom: 4px;
+}
+
+input.search-input {
+  padding: 8px 10px 6px 10px;
+}
+
+input.search-input:active,
+input.search-input:hover,
+input.search-button:hover,
+input.search-button:active,
+button.location-button:hover,
+button.location-button:active {
+  box-shadow: 0 0 0 0.22rem rgba(185, 65, 65, 0.7);
 }

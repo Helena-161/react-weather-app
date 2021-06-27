@@ -1,0 +1,31 @@
+.WeatherInfo {
+  margin-top: 2px;
+}
+
+.city-country {
+  margin-top: 5px;
+  font-weight: 700;
+}
+
+.temperature {
+  line-height: 53px;
+  font-size: 52px;
+  font-weight: 700;
+}
+
+.units {
+  font-size: 25px;
+  font-weight: 800;
+  position: relative;
+  bottom: 18px;
+}
+
+.description::first-letter {
+  text-transform: uppercase;
+}
+
+p {
+  font-size: 17px;
+  font-weight: 400;
+  margin-bottom: 0;
+}

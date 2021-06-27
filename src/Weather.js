@@ -1,18 +1,20 @@
 import React, { useState } from "react";
 import axios from "axios";
 import "./Weather.css";
+import WeatherInfo from "./WeatherInfo";
 
 export default function Weather(props) {
-  let [city, setCity] = useState("");
-  let [details, setDetails] = useState({});
-  const [loaded, setLoaded] = useState(false);
+  let [city, setCity] = useState(props.defaultCity);
+  let [apiDetails, setApiDetails] = useState({ loaded: false });
+  const [unit, setUnit] = useState("celsius");
 
-  // Integration of details from API
+  // Data integration from API
   function displayWeather(response) {
-    setLoaded(true);
-    setDetails({
+    setApiDetails({
+      loaded: true,
       city: response.data.name,
       country: response.data.sys.country,
+      date: response.data.dt * 1000,
       temperature: response.data.main.temp,
       feelslike: response.data.main.feels_like,
       wind: response.data.wind.speed,
@@ -23,8 +25,8 @@ export default function Weather(props) {
   }
 
   // Search current weather by city (API call)
-  function searchWeather(city) {
-    let apiKey = "2ccfd3ff79016dcd8763eb6a62db444b";
+  function searchWeather() {
+    let apiKey = "b61fef651891eb9cf133b7845c0e062a";
     let units = "metric";
     let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=${units}`;
     axios.get(apiUrl).then(displayWeather);
@@ -34,10 +36,8 @@ export default function Weather(props) {
     event.preventDefault();
     if (city) {
       searchWeather(city);
-      setCity("");
     } else {
       alert(`Enter a city to submit your search`);
-      setCity("");
     }
   }
 
@@ -45,47 +45,54 @@ export default function Weather(props) {
     setCity(event.target.value);
   }
 
-  if (loaded) {
+  // API call by current location
+  function gpsSearch(position) {
+    let lat = position.coords.latitude;
+    let lon = position.coords.longitude;
+    let units = "metric";
+    let apiKey = "b61fef651891eb9cf133b7845c0e062a";
+    let apiUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=${units}`;
+    axios.get(apiUrl).then(displayWeather);
+  }
+
+  function fetchLocation(event) {
+    event.preventDefault();
+    navigator.geolocation.getCurrentPosition(gpsSearch);
+  }
+
+  if (apiDetails.loaded) {
     return (
-      <div>
-        <form onSubmit={handleSubmit}>
+      <div className="Weather">
+        <form onSubmit={handleSubmit} className="Search">
           <input
             type="Search"
             placeholder="Enter a city.."
             onChange={updateCity}
             autoComplete="off"
+            className="search-input rounded border border-dark me-2"
           />
-          <input type="submit" value="Search" />
+          <input
+            type="submit"
+            value="Search"
+            className="search-button btn btn-dark me-2"
+          />
+          <button
+            type="button"
+            onClick={fetchLocation}
+            className="location-button btn btn-dark"
+          >
+            Location
+          </button>
         </form>
-        <ul>
-          <li>
-            <strong>
-              {" "}
-              Current weather in {details.city}, {details.country}
-            </strong>
-          </li>
-          <li>Temperature: {Math.round(details.temperature)}°C</li>
-          <li>Feels like: {Math.round(details.feelslike)}°C</li>
-          <li>Humidity: {details.humidity}%</li>
-          <li>Wind: {details.wind} m/s</li>
-          <li>Description: {details.description}</li>
-          <li>
-            <img src={details.icon} alt={details.description} />
-          </li>
-        </ul>
+        <WeatherInfo apiData={apiDetails} unit={unit} setUnit={setUnit} />
       </div>
     );
   } else {
+    searchWeather();
     return (
-      <form onSubmit={handleSubmit}>
-        <input
-          type="Search"
-          placeholder="Enter a city.."
-          onChange={updateCity}
-          autoComplete="off"
-        />
-        <input type="submit" value="Search" />
-      </form>
+      <div className="Loading">
+        <h1>Loading...</h1>
+      </div>
     );
   }
 }

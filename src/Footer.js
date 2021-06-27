@@ -1,8 +1,9 @@
 import React from "react";
+import "./Footer.css";
 
 export default function Footer() {
   return (
-    <footer className="Footer text-center">
+    <footer className="Footer text-center my-2">
       <p>
         <a
           href="https://github.com/Helena-161/react-weather-app"

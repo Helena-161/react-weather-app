@@ -1,14 +1,12 @@
-.Forecast {
-  margin-top: 5px;
-  text-align: center;
-  font-weight: 600;
+.Footer {
+  font-weight: 400;
+  font-size: 14px;
 }
 
-h3.forecast-temp {
-  font-size: 22px;
-  padding: 3px 5px;
+.Footer a {
+  color: #240909;
 }
 
-img.forecast-icon {
-  width: 65px;
+.Footer a:hover {
+  color: rgba(170, 28, 28, 0.9);
 }
