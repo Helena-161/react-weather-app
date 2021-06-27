@@ -3,6 +3,7 @@
 }
 
 .city-country {
+  text-align: center;
   margin-top: 5px;
   font-weight: 700;
 }
@@ -20,11 +21,25 @@
   bottom: 18px;
 }
 
+.units a {
+  color: rgba(165, 25, 15, 0.9);
+}
+
+.units a:hover {
+  color: rgba(100, 25, 20, 1);
+}
+
 .description::first-letter {
   text-transform: uppercase;
 }
 
+.description {
+  text-align: center;
+  font-weight: 600;
+}
+
 p {
+  text-align: left;
   font-size: 17px;
   font-weight: 400;
   margin-bottom: 0;
