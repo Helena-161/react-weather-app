@@ -13,3 +13,12 @@ h4.forecast-temp {
 .forecast-temp.min {
   opacity: 0.8;
 }
+.forecastDay {
+  border: 1px solid rgb(235, 149, 87);
+  box-shadow: 5px 5px 5px rgb(241, 178, 41);
+  border-radius: 6px;
+}
+h3.forecast-day {
+  font-size: 20px;
+  font-weight: 700;
+}

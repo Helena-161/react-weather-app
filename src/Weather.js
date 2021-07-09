@@ -87,7 +87,7 @@ export default function Weather(props) {
           </button>
         </form>
         <WeatherInfo apiData={apiDetails} unit={unit} setUnit={setUnit} />
-        <Forecast coord={apiDetails.coord} unit={unit} setUnit={setUnit} />
+        <Forecast coord={apiDetails.coord} unit={unit} />
       </div>
     );
   } else {
