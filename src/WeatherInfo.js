@@ -2,7 +2,7 @@ import React from "react";
 import LastUpdated from "./LastUpdated";
 import CurrentTemperature from "./CurrentTemperature";
 import FeelsLikeTemperature from "./FeelsLikeTemperature";
-
+import WeatherIcons from "./WeatherIcons";
 import "./WeatherInfo.css";
 
 export default function WeatherInfo(props) {
@@ -18,7 +18,7 @@ export default function WeatherInfo(props) {
           unit={props.unit}
           setUnit={props.setUnit}
         />
-        <img src={props.apiData.icon} alt={props.apiData.description} />
+        <WeatherIcons code="01d" size={36} />
         <h3 className="description">{props.apiData.description}</h3>
       </div>
       <FeelsLikeTemperature
