@@ -18,7 +18,7 @@ export default function WeatherInfo(props) {
           unit={props.unit}
           setUnit={props.setUnit}
         />
-        <WeatherIcons code="01d" size={36} />
+        <WeatherIcons code={props.apiData.icon} size={42} />
         <h3 className="description">{props.apiData.description}</h3>
       </div>
       <FeelsLikeTemperature

@@ -1,51 +1,45 @@
-import React from "react";
+import React, { useState } from "react";
 import "./Forecast.css";
 import WeatherIcons from "./WeatherIcons";
+import ForecastDay from "./ForecastDay";
+import axios from "axios";
 
-export default function Forecast() {
-  return (
-    <div className="Forecast">
-      <div className="row gx-2 gy-1 text-center forecast">
-        <div className="col-6 col-sm-4 col-md-2">
-          <h2 className="forecast-day">Mon</h2>
-          <WeatherIcons code="01d" size={36} />
-          <h3 className="forecast-temp min">11 °C</h3>
-          <h3 className="forecast-temp max">14 °C</h3>
-        </div>
+export default function Forecast(props) {
+  let [loaded, setLoaded] = useState(false);
+  let [forecastData, setForecastData] = useState(null);
 
-        <div className="col-6 col-sm-4 col-md-2">
-          <h2 className="forecast-day">Tue</h2>
-          <WeatherIcons code="01d" size={36} />
-          <h3 className="forecast-temp min">15 °C</h3>
-          <h3 className="forecast-temp max">18 °C</h3>
-        </div>
+  function handleResponse(response) {
+    setForecastData(response.data.daily);
+    setLoaded(true);
+  }
 
-        <div className="col-6 col-sm-4 col-md-2">
-          <h2 className="forecast-day">Wed</h2>
-          <WeatherIcons code="01d" size={36} />
-          <h3 className="forecast-temp min">16 °C</h3>
-          <h3 className="forecast-temp max">19 °C</h3>
-        </div>
-
-        <div className="col-6 col-sm-4 col-md-2">
-          <h2 className="forecast-day">Thu</h2>
-          <WeatherIcons code="01d" size={36} />
-          <h3 className="forecast-temp min">16 °C</h3>
-          <h3 className="forecast-temp max">19 °C</h3>
-        </div>
-        <div className="col-6 col-sm-4 col-md-2">
-          <h2 className="forecast-day">Fri</h2>
-          <WeatherIcons code="01d" size={36} />
-          <h3 className="forecast-temp min">16 °C</h3>
-          <h3 className="forecast-temp max">19 °C</h3>
-        </div>
-        <div className="col-6 col-sm-4 col-md-2">
-          <h2 className="forecast-day">Sat</h2>
-          <WeatherIcons code="01d" size={36} />
-          <h3 className="forecast-temp min">16 °C</h3>
-          <h3 className="forecast-temp max">19 °C</h3>
+  if (loaded) {
+    return (
+      <div className="Forecast">
+        <div className="row gx-2 gy-1 text-center forecast">
+          {forecastData.map(function (dailyForecast, index) {
+            if (index < 6) {
+              return (
+                <div className="col-6 col-sm-4 col-md-2" key={index}>
+                  <ForecastDay data={dailyForecast} />
+                </div>
+              );
+            }
+          })}
         </div>
       </div>
-    </div>
-  );
+    );
+  } else {
+    let apiKey = "b61fef651891eb9cf133b7845c0e062a";
+    let longtitude = props.coord.lon;
+    let latitude = props.coord.lat;
+    let unit = "metric";
+    let apiUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longtitude}&exclude={part}&appid=${apiKey}&units=${unit}`;
+    axios.get(apiUrl).then(handleResponse);
+    return (
+      <div className="Loading">
+        <h1>Loading...</h1>
+      </div>
+    );
+  }
 }

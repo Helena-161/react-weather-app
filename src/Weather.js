@@ -13,6 +13,7 @@ export default function Weather(props) {
   function displayWeather(response) {
     setApiDetails({
       loaded: true,
+      coord: response.data.coord,
       city: response.data.name,
       country: response.data.sys.country,
       date: response.data.dt * 1000,
@@ -20,7 +21,7 @@ export default function Weather(props) {
       feelslike: response.data.main.feels_like,
       wind: response.data.wind.speed,
       humidity: response.data.main.humidity,
-      icon: `http://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`,
+      icon: response.data.weather[0].icon,
       description: response.data.weather[0].description,
     });
   }
@@ -86,7 +87,7 @@ export default function Weather(props) {
           </button>
         </form>
         <WeatherInfo apiData={apiDetails} unit={unit} setUnit={setUnit} />
-        <Forecast apiData={apiDetails} unit={unit} setUnit={setUnit} />
+        <Forecast coord={apiDetails.coord} unit={unit} setUnit={setUnit} />
       </div>
     );
   } else {
